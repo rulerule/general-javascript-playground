@@ -1,63 +1,38 @@
 <template>
-  <div @scroll="scrollHandler" class="home">
-    <app-header :scrolled="scrolled" :backHandler="backStep"></app-header>
-    <app-breadcrumbs :scrolled="scrolled" :steps="steps" :activeStep="activeStep"></app-breadcrumbs>
-    <div class="filler">
-      <h1>FILLER TEXT</h1>
-      <h1>FILLER TEXT</h1>
-      <h1>FILLER TEXT</h1>
-      <h1>FILLER TEXT</h1>
-      <h1>FILLER TEXT</h1>
-      <h1>FILLER TEXT</h1>
-      <h1>FILLER TEXT</h1>
-      <h1>FILLER TEXT</h1>
-      <h1>FILLER TEXT</h1>
-      <h1>FILLER TEXT</h1>
-    </div>
-    <button @click="advanceStep" >Advance Step</button>
-  </div>
+  <section class="home-wrapper">
+    <app-card-container :params="card" v-for="card in cards" :key="card.id"></app-card-container>
+  </section>
 </template>
 
 <script>
-import Breadcrumbs from '@/components/Breadcrumbs'
-import { breadcrumbsCreate } from '@/assets/auxObjects/breadcrumbsAccountCreat'
-import StepsHeader from '@/components/StepsHeader'
+import { cards } from '@/assets/cards.js'
+import CardContainer from '@/components/CardContainer.vue'
 export default {
+  name: 'home',
   data () {
     return {
-      activeStep: 1,
-      steps: breadcrumbsCreate.steps,
-      scrolled: 0
+      cards: cards.list
     }
   },
   components: {
-    'app-breadcrumbs': Breadcrumbs,
-    'app-header': StepsHeader
-  },
-  methods: {
-    advanceStep () {
-      if (this.activeStep === this.steps.length) return
-      this.activeStep++
-    },
-    backStep () {
-      if (this.activeStep === 1) return
-      --this.activeStep
-    },
-    scrollHandler (event) {
-      this.scrolled = event.target.scrollTop
-    }
+    'app-card-container': CardContainer
   }
 }
 </script>
 
 <style lang="scss">
-.home {
-  height:100%;
+.home-wrapper {
   width:100%;
-  box-sizing:border-box;
+  height:100%;
+  background-color:black;
+  display:flex;
+  flex-direction:row;
+  flex-flow:wrap;
+  justify-content:center;
+  align-items:center;
   overflow:auto;
-  .filler {
-    height:1600px;
-  }
+  box-sizing:border-box;
+  padding:25px;
+  position:relative;
 }
 </style>
